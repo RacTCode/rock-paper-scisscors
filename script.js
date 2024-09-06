@@ -1,93 +1,80 @@
 let playerWin = 0;
 let computerWin = 0;
+const head1 = document.querySelector("#head");
+const text = document.createElement("h2");
+const moreText = document.createElement("h2");
+const evenMoreText = document.createElement("h2");
+text.textContent = `Player points: ${playerWin} || Computer points: ${computerWin}`;
+moreText.textContent = `Both players take their stance`;
+evenMoreText.textContent= `Ready when you are...`;
+head1.appendChild(text);
+head1.appendChild(moreText);
+head1.appendChild(evenMoreText);
+const rock = document.querySelector("#Rock");
+const paper = document.querySelector("#Paper");
+const scissors = document.querySelector("#Scissors");
+let playerChoice;
+let computerChoice;
 
-function play() {
-  while (playerWin !== 5 && computerWin !== 5) {
-    round();
-  }
-  if (playerWin == 5) {
-    console.log("You Win :)");
-  } else if (computerWin == 5) {
-    console.log("You lose");
-  } else {
-    console.log("What?");
-  }
+function clickRock(){
+  playerChoice = "Rock";
+  battle(playerChoice,computerChoice)
+}
+
+function clickPaper(){
+  playerChoice = "Paper";
+  battle(playerChoice,computerChoice)
+}
+
+function clickScissors(){
+  playerChoice = "Scissors";
+  battle(playerChoice,computerChoice)
 }
 
 function round() {
-  let playerChoice;
-  let computerChoice;
-  let rand = Math.random() * 3;
-  if (rand < 1) {
-    computerChoice = "rock";
-  } else if (rand < 2) {
-    computerChoice = "paper";
-  } else {
-    computerChoice = "scissors";
-  }
-  do {
-    playerChoice = prompt("Enter your poison: ").toLowerCase();
-    if (
-      playerChoice !== "rock" &&
-      playerChoice !== "paper" &&
-      playerChoice !== "scissors"
-    ) {
-      console.log("Invalid Input");
-    }
-  } while (
-    playerChoice !== "rock" &&
-    playerChoice !== "paper" &&
-    playerChoice !== "scissors"
-  );
-  battle(playerChoice, computerChoice);
+  rock.addEventListener("click", clickRock);
+  paper.addEventListener("click", clickPaper);
+  scissors.addEventListener("click", clickScissors);
 }
 
 function battle(playerChoice, computerChoice) {
-  if (playerChoice == "rock" && computerChoice == "scissors") {
-    console.log(
-      `You picked ${playerChoice}, computer picked ${computerChoice}`
-    );
-    console.log(`You win`);
-    playerWin++;
-    console.log(
-      `Player points: ${playerWin} || Computer points: ${computerWin}`
-    );
-  } else if (playerChoice == "paper" && computerChoice == "rock") {
-    console.log(
-      `You picked ${playerChoice}, computer picked ${computerChoice}`
-    );
-    console.log(`You win`);
-    playerWin++;
-    console.log(
-      `Player points: ${playerWin} || Computer points: ${computerWin}`
-    );
-  } else if (playerChoice == "scissors" && computerChoice == "paper") {
-    console.log(
-      `You picked ${playerChoice}, computer picked ${computerChoice}`
-    );
-    console.log(`You win`);
-    playerWin++;
-    console.log(
-      `Player points: ${playerWin} || Computer points: ${computerWin}`
-    );
-  } else if (playerChoice == computerChoice) {
-    console.log(
-      `You picked ${playerChoice}, computer picked ${computerChoice}`
-    );
-    console.log(`Tie`);
-    console.log(
-      `Player points: ${playerWin} || Computer points: ${computerWin}`
-    );
+  let rand = Math.random() * 3;
+  if (rand < 1) {
+    computerChoice = "Rock";
+  } else if (rand < 2) {
+    computerChoice = "Paper";
   } else {
-    console.log(
-      `You picked ${playerChoice}, computer picked ${computerChoice}`
-    );
-    console.log(`You lose`);
-    computerWin++;
-    console.log(
-      `Player points: ${playerWin} || Computer points: ${computerWin}`
-    );
+    computerChoice = "Scissors";
   }
+  if (playerChoice == "Rock" && computerChoice == "Scissors") {
+    playerWin++;
+    evenMoreText.textContent = `You win the round`;
+  } else if (playerChoice == "Paper" && computerChoice == "Rock") {
+    playerWin++;
+    evenMoreText.textContent = `You win the round`;
+  } else if (playerChoice == "Scissors" && computerChoice == "Paper") {
+    playerWin++;
+    evenMoreText.textContent = `You win the round`;
+  } else if (playerChoice == computerChoice) {
+    evenMoreText.textContent = `It's a tie`;
+  } else {
+    computerWin++;
+    evenMoreText.textContent = `You lose the round`;
+  }
+  text.textContent = `Player points: ${playerWin} || Computer points: ${computerWin}`;
+  moreText.textContent = `You picked ${playerChoice}, computer picked ${computerChoice}`;
+  if (playerWin == 5) {
+    evenMoreText.textContent="YOU WIN THE GAME"
+    remove();
+  } else if (computerWin == 5) {
+    evenMoreText.textContent="YOU LOSE THE GAME"
+    remove()
+}}
+
+function remove(){
+  rock.removeEventListener("click", clickRock);
+  paper.removeEventListener("click", clickPaper);
+  scissors.removeEventListener("click", clickScissors);
 }
 
-play();
+round();
