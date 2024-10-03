@@ -13,3 +13,6 @@ This project idea was from Odin Project
 I made it to learn about event listeners and how I could change the DOM model
 
 *PS: No, I did not make it interactive. If you feel it is, it's because I use flexbox for centering my divs. I found using media queries for a practice project to be overkill*
+
+## Links
+[Odin Project](https://www.theodinproject.com)
